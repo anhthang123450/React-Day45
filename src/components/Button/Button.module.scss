@@ -1,0 +1,44 @@
+.wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 120px;
+    gap: 8px;
+    border: none;
+    outline: none;
+    padding: 8px 16px;
+    margin: 4px;
+    text-decoration: none;
+    background-color: #ccc;
+    color: #333;
+    user-select: none;
+}
+
+.primary {
+    background-color: aqua;
+}
+
+.secondary {
+    background-color: chartreuse;
+}
+
+.rounded {
+    border-radius: 999px;
+}
+
+.small {
+    padding: 6px 12px;
+}
+
+.medium {
+    padding: 8px 16px;
+}
+
+.large {
+    padding: 12px 20px;
+}
+
+.disabled {
+    opacity: 0.5;
+    // pointer-events: none;
+}
