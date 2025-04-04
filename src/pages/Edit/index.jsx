@@ -12,6 +12,7 @@ let timer;
 const Edit = () => {
     const { id } = useParams();
     const [preview, setPreview] = useState(null);
+    const [avatar, setAvatar] = useState(null);
 
     const {
         register,
@@ -32,8 +33,8 @@ const Edit = () => {
     useEffect(() => {
         const handle = async () => {
             const response = await authService.getCurrentUser();
+            setAvatar(response.user.image);
             reset(response.user);
-            console.log(response.user);
         };
         handle();
     }, []);
@@ -66,7 +67,6 @@ const Edit = () => {
 
         timer = setTimeout(async () => {
             const inValid = await trigger("phone");
-            console.log(inValid);
             if (inValid) {
                 const exists = await authService.checkPhone(phoneValue, id);
                 if (exists) {
@@ -104,8 +104,9 @@ const Edit = () => {
 
     const onSubmit = async (data) => {
         const date = new Date(data.birthDate);
+        const month = date.getMonth() + 1;
         data.birthDate =
-            date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+            date.getFullYear() + "-" + month + "-" + date.getDate();
 
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => {
@@ -117,14 +118,18 @@ const Edit = () => {
         });
         const response = await userService.update(id, formData);
         alert("Thêm dữ liệu thành công");
-        console.log(response);
     };
 
     return (
         <div>
             <form action="" onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <img src={preview} alt="" />
+                    <img
+                        src={preview || avatar}
+                        alt=""
+                        width={100}
+                        height={100}
+                    />
                 </div>
                 <div>
                     <label htmlFor="">Avatar</label>
@@ -229,7 +234,7 @@ const Edit = () => {
                         message={errors.emailVerifiedAt?.message}
                     />
                 </div>
-                <button>Submit</button>
+                <button type="submit">Submit</button>
             </form>
         </div>
     );

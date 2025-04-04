@@ -1,4 +1,5 @@
 import InputText from "@/components/InputText";
+import config from "@/config";
 import { registerSchema } from "@/schema/registerSchema";
 import authService from "@/services/authService";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,14 +29,16 @@ const Register2 = () => {
             lastName,
             email: data.email,
             password: data.password,
-            passwordConfirmation: data.password_confirmation,
+            password_confirmation: data.password_confirmation,
         };
+
+        console.log(formData);
 
         try {
             const response = await authService.register(formData);
             alert("Đăng ký thành công");
             localStorage.setItem("token", response.access_token);
-            navigate("/");
+            navigate(config.routes.login2);
         } catch (error) {
             console.log(error);
         }

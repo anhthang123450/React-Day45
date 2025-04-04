@@ -40,6 +40,9 @@ const Profile = () => {
                 <p>
                     Họ và tên: {profile.firstName} {profile.lastName}
                 </p>
+                <div>
+                    <img src={profile.image} />
+                </div>
                 <p>Email: {profile.email}</p>
                 <p>Giới tính: {profile.gender || "Chưa cập nhật"}</p>
                 <p>Tuổi: {profile.age || "Chưa cập nhật"}</p>
