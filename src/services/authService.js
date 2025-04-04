@@ -24,9 +24,31 @@ export const checkEmail = async (email) => {
     return response.exists;
 };
 
+export const checkPhone = async (phone, exclude_id) => {
+    const response = await httpRequest.get("auth/check-phone", {
+        params: {
+            phone,
+            exclude_id,
+        },
+    });
+    return response.exists;
+};
+
+export const checkUsername = async (username, exclude_id) => {
+    const response = await httpRequest.get("auth/check-username", {
+        params: {
+            username,
+            exclude_id,
+        },
+    });
+    return response.exists;
+};
+
 export default {
     register,
     login,
     getCurrentUser,
     checkEmail,
+    checkPhone,
+    checkUsername,
 };

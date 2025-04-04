@@ -8,9 +8,15 @@ const httpRequest = axios.create({
 });
 
 const send = async (method, url, data, config) => {
+    const isPutOrPatch = ["put", "patch"].includes(method.toLowerCase());
+    const effectiveMethod = isPutOrPatch ? "post" : method;
+    const effectivePath = isPutOrPatch
+        ? `${url}${url.includes("?") ? "&" : "?"}_method=${method}`
+        : url;
+
     const response = await httpRequest.request({
-        method,
-        url,
+        method: effectiveMethod,
+        url: effectivePath,
         data,
         ...config,
     });
