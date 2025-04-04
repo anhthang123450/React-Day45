@@ -15,7 +15,15 @@ export const getOne = async (id) => {
 };
 
 export const update = async (id, data) => {
-    const response = await httpRequest.put(`/users/${id}`, data);
+    const response = await httpRequest.put(
+        `/users/me`,
+        {
+            params: {
+                id,
+            },
+        },
+        data
+    );
     return response;
 };
 

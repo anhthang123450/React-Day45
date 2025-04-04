@@ -2,6 +2,7 @@ import InputText from "@/components/InputText";
 import config from "@/config";
 import { registerSchema } from "@/schema/registerSchema";
 import authService from "@/services/authService";
+import httpRequest from "@/utils/httpRequest";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -37,7 +38,7 @@ const Register2 = () => {
         try {
             const response = await authService.register(formData);
             alert("Đăng ký thành công");
-            localStorage.setItem("token", response.access_token);
+            httpRequest.setToken(response.access_token);
             navigate(config.routes.login2);
         } catch (error) {
             console.log(error);

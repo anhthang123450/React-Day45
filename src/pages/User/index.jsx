@@ -8,8 +8,7 @@ function User() {
     useEffect(() => {
         (async () => {
             const users = await userService.getAll();
-            console.log(users);
-            setUser(users);
+            setUser(users.data);
         })();
     }, []);
 

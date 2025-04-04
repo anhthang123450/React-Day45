@@ -33,8 +33,8 @@ const Edit = () => {
     useEffect(() => {
         const handle = async () => {
             const response = await authService.getCurrentUser();
-            setAvatar(response.user.image);
-            reset(response.user);
+            setAvatar(response.data.image);
+            reset(response.data);
         };
         handle();
     }, []);
@@ -117,6 +117,7 @@ const Edit = () => {
             }
         });
         const response = await userService.update(id, formData);
+        console.log(response);
         alert("Thêm dữ liệu thành công");
     };
 
@@ -163,7 +164,7 @@ const Edit = () => {
                 <div>
                     <label htmlFor="">Tuổi</label>
                     <InputText
-                        type="text"
+                        type="number"
                         name="age"
                         register={register}
                         message={errors.age?.message}
