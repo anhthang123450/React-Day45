@@ -40,8 +40,12 @@ const Register2 = () => {
             alert("Đăng ký thành công");
             httpRequest.setToken(response.access_token);
             navigate(config.routes.login2);
-        } catch (error) {
-            console.log(error);
+        } catch (errors) {
+            console.log(errors);
+            setError("password", {
+                type: "manual",
+                message: "Tài khoản mật khẩu không chính xác",
+            });
         }
     };
 

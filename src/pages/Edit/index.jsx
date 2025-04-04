@@ -4,15 +4,18 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import authService from "@/services/authService";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import userService from "@/services/userService";
 import { checkPhone } from "./../../services/authService";
+import config from "@/config";
 
 let timer;
 const Edit = () => {
     const { id } = useParams();
     const [preview, setPreview] = useState(null);
     const [avatar, setAvatar] = useState(null);
+
+    const navigate = useNavigate();
 
     const {
         register,
@@ -119,6 +122,7 @@ const Edit = () => {
         const response = await userService.update(id, formData);
         console.log(response);
         alert("Thêm dữ liệu thành công");
+        navigate(config.routes.profile);
     };
 
     return (

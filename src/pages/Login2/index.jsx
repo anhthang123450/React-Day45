@@ -36,8 +36,12 @@ const Login2 = () => {
             httpRequest.setToken(response.data.access_token);
             navigate(query.get("continue") || config.routes.home);
             return response;
-        } catch (err) {
-            console.log(err);
+        } catch (errors) {
+            console.log(errors);
+            setError("password", {
+                type: "manual",
+                message: "Tài khoản mật khẩu không chính xác",
+            });
         }
     };
 
