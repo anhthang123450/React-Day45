@@ -1,3 +1,4 @@
+import config from "@/config";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -7,19 +8,21 @@ const Navigation = () => {
             <nav>
                 <ul>
                     <li>
-                        <NavLink to="/">Home</NavLink>
+                        <NavLink to={config.routes.home}>Home</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/products">Products</NavLink>
+                        <NavLink to={config.routes.products}>Products</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/register2">Register2</NavLink>
+                        <NavLink to={config.routes.register2}>
+                            Register2
+                        </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/login2">Login2</NavLink>
+                        <NavLink to={config.routes.login2}>Login2</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/user">User</NavLink>
+                        <NavLink to={config.routes.users}>User</NavLink>
                     </li>
                 </ul>
             </nav>

@@ -13,7 +13,6 @@ const Profile = () => {
         (async () => {
             try {
                 const user = await userService.getOne(id);
-
                 setProfile(user.data);
             } catch (errors) {
                 console.log(errors);
@@ -25,7 +24,6 @@ const Profile = () => {
         (async () => {
             try {
                 const data = await authService.getCurrentUser();
-
                 setCurrentUser(data.data);
             } catch (error) {
                 console.error(error);

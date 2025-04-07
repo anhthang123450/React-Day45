@@ -21,7 +21,7 @@ export const checkEmail = async (email) => {
             email,
         },
     });
-    return response.exists;
+    return response.data.exists;
 };
 
 export const checkPhone = async (phone, exclude_id) => {
@@ -31,7 +31,7 @@ export const checkPhone = async (phone, exclude_id) => {
             exclude_id,
         },
     });
-    return response.exists;
+    return response.data.exists;
 };
 
 export const checkUsername = async (username, exclude_id) => {
@@ -41,7 +41,7 @@ export const checkUsername = async (username, exclude_id) => {
             exclude_id,
         },
     });
-    return response.exists;
+    return response.data.exists;
 };
 
 export default {

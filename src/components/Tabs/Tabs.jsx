@@ -6,7 +6,11 @@ const Tabs = ({ Children }) => {
         title: child.props.title,
     }));
 
-    return <div></div>;
+    return (
+        <div className="tabs-wrapper">
+            <header className="tabs-header">{tabs.map((tab) => {})}</header>
+        </div>
+    );
 };
 
 export default Tabs;

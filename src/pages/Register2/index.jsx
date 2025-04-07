@@ -1,5 +1,6 @@
 import InputText from "@/components/InputText";
 import config from "@/config";
+import useDebounce from "@/hooks/useBounce";
 import { registerSchema } from "@/schema/registerSchema";
 import authService from "@/services/authService";
 import httpRequest from "@/utils/httpRequest";
@@ -33,8 +34,6 @@ const Register2 = () => {
             password_confirmation: data.password_confirmation,
         };
 
-        console.log(formData);
-
         try {
             const response = await authService.register(formData);
             alert("Đăng ký thành công");
@@ -42,32 +41,36 @@ const Register2 = () => {
             navigate(config.routes.login2);
         } catch (errors) {
             console.log(errors);
-            setError("password", {
+            setError("password_confirmation", {
                 type: "manual",
-                message: "Tài khoản mật khẩu không chính xác",
+                message: "Đăng ký thất bại",
             });
         }
     };
 
     const emailValue = watch("email");
+    const debounceValue = useDebounce(emailValue, 800);
 
     useEffect(() => {
-        if (!emailValue) return;
-        clearTimeout(timer);
+        if (!debounceValue) return;
 
-        timer = setTimeout(async () => {
-            const inValid = await trigger("email");
-            if (inValid) {
-                const exists = await authService.checkEmail(emailValue);
+        const inValidEmail = async () => {
+            const isValid = await trigger("email");
+
+            if (isValid) {
+                const exists = await authService.checkEmail(debounceValue);
+                console.log(exists);
+
                 if (exists) {
                     setError("email", {
-                        type: "test",
+                        type: "manual",
                         message: "Email đã tồn tại",
                     });
                 }
             }
-        }, 600);
-    }, [emailValue, trigger, setError]);
+        };
+        inValidEmail();
+    }, [debounceValue, trigger, setError]);
 
     const getName = (name) => {
         const parts = name

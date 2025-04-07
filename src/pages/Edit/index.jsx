@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import userService from "@/services/userService";
 import { checkPhone } from "./../../services/authService";
 import config from "@/config";
+import useDebounce from "@/hooks/useBounce";
 
 let timer;
 const Edit = () => {
@@ -44,66 +45,73 @@ const Edit = () => {
 
     // Check email
     const emailValue = watch("email");
-    useEffect(() => {
-        if (!emailValue) return;
-        clearTimeout(timer);
+    const debounceEmail = useDebounce(emailValue, 800);
 
-        timer = setTimeout(async () => {
-            const inValid = await trigger("email");
-            if (inValid) {
-                const exists = await authService.checkEmail(emailValue);
+    useEffect(() => {
+        if (!debounceEmail) return;
+
+        const inValidEmail = async () => {
+            const isValid = await trigger("email");
+            if (isValid) {
+                const exists = await authService.checkEmail(debounceEmail);
                 if (exists) {
                     setError("email", {
-                        type: "test",
+                        type: "manual",
                         message: "Email đã tồn tại",
                     });
                 }
             }
-        }, 600);
-    }, [emailValue, trigger, setError]);
+        };
+        if (debounceEmail) {
+            inValidEmail();
+        }
+    }, [debounceEmail, trigger, setError]);
 
     // Check phone
     const phoneValue = watch("phone");
-    useEffect(() => {
-        if (!phoneValue) return;
-        clearTimeout(timer);
+    const debouncePhone = (phoneValue, 800);
 
-        timer = setTimeout(async () => {
-            const inValid = await trigger("phone");
-            if (inValid) {
-                const exists = await authService.checkPhone(phoneValue, id);
+    useEffect(() => {
+        if (!debouncePhone) return;
+        const inValidPhone = async () => {
+            const isValid = await trigger("phone");
+            if (isValid) {
+                const exists = await authService.checkEmail(debouncePhone, id);
                 if (exists) {
                     setError("phone", {
-                        type: "test",
+                        type: "manual",
                         message: "Số điện thoại đã tồn tại",
                     });
                 }
             }
-        }, 600);
-    }, [phoneValue, trigger, setError]);
+        };
+        if (debouncePhone) {
+            inValidPhone();
+        }
+    }, [debouncePhone, trigger, setError]);
 
     // Check Username
     const usernameValue = watch("username");
+    const debounceUsername = useDebounce(usernameValue, 800);
     useEffect(() => {
-        if (!usernameValue) return;
-        clearTimeout(timer);
-
-        timer = setTimeout(async () => {
-            const inValid = await trigger("username");
-            if (inValid) {
+        if (!debounceUsername) return;
+        const inValidPhone = async () => {
+            const isValid = await trigger("phone");
+            if (isValid) {
                 const exists = await authService.checkUsername(
-                    usernameValue,
+                    debounceUsername,
                     id
                 );
                 if (exists) {
                     setError("username", {
-                        type: "test",
+                        type: "manual",
                         message: "Username đã tồn tại",
                     });
                 }
             }
-        }, 600);
-    }, [usernameValue, trigger, setError]);
+        };
+        inValidPhone();
+    }, [debounceUsername, trigger, setError]);
 
     const onSubmit = async (data) => {
         const date = new Date(data.birthDate);

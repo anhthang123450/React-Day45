@@ -24,7 +24,7 @@ const routes = [
     {
         path: config.routes.products,
         component: Products,
-        protected: true,
+        // protected: true,
         // AdminLayout
     },
     {
@@ -43,7 +43,7 @@ const routes = [
     },
 
     {
-        path: config.routes.user,
+        path: config.routes.users,
         component: User,
         // protected: true,
     },

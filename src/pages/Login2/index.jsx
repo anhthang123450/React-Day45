@@ -31,8 +31,8 @@ const Login2 = () => {
     const onSubmit = async (data) => {
         try {
             const response = await authService.login(data);
-            alert("Đăng nhập thành công");
             console.log(response);
+            alert("Đăng nhập thành công");
             httpRequest.setToken(response.data.access_token);
             navigate(query.get("continue") || config.routes.home);
             return response;

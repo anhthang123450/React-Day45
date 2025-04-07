@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import * as productService from "@/services/productService";
+import { LoadingContext } from "@/contexts/LoadingContext";
 
 const Products = () => {
     const [products, setProducts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    // const [isLoading, setIsLoading] = useState(true);
+    const { loading, setLoading } = useContext(LoadingContext);
 
     useEffect(() => {
         const handle = async () => {
             const res = await productService.getAll();
-            setProducts(res.data);
-            setIsLoading(false);
+            setProducts(res.data.items);
+            setLoading(false);
         };
         handle();
     }, []);
 
-    if (isLoading) return <div>Loading.....</div>;
+    if (loading) return <div>Loading.....</div>;
     return (
         <div>
             <ul>

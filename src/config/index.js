@@ -15,7 +15,7 @@ const config = {
 
         profile: "/profile/:id",
         edit: "/profile/:id/edit",
-        user: "/user",
+        users: "/users",
 
         notFound: "*",
     },
